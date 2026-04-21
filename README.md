@@ -12,7 +12,7 @@ Sistema de punto de venta desarrollado en Python + CustomTkinter con base de dat
 ## Estructura del proyecto
 ---
 
-## 🧩 Modulo evaluado: Gestion de Productos
+## Modulo evaluado: Gestion de Productos
 
 ### ¿Que hace?
 Permite administrar completamente el catalogo de productos: agregar, editar, eliminar y buscar productos conectandose directamente a MySQL.
@@ -20,16 +20,15 @@ Permite administrar completamente el catalogo de productos: agregar, editar, eli
 ### Requerimientos que cubre
 | ID | Requerimiento |
 |----|--------------|
-| RF-13 | Agregar nuevo producto con todos sus datos |
-| RF-14 | Editar informacion de producto existente |
-| RF-15 | Eliminar producto con confirmacion previa |
-| RF-16 | Busqueda en tiempo real por nombre o codigo |
-| RF-17 | Validacion: codigo solo numeros, precio > 0, sin duplicados |
-| RF-18 | Stock en rojo si es bajo, verde si esta OK |
+| RF-7 | Agregar nuevo producto con todos sus datos |
+| RF-8 | Editar informacion de producto existente |
+| RF-9 | Eliminar producto con confirmacion previa |
+| RF-11| Busqueda en tiempo real por nombre o codigo |
+| RF-12 | Stock en rojo si es bajo, verde si esta OK |
 
 ---
 
-## 💻 Fragmentos de codigo explicados
+## Fragmentos de codigo explicados
 
 ### 1. `screens/productos.py` — Funcion `_agregar()`
 Registra un nuevo producto en MySQL. Primero valida los campos, luego verifica que el codigo no este duplicado y finalmente ejecuta el INSERT.
