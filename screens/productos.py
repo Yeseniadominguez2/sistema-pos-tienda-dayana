@@ -16,7 +16,7 @@ class GestionProductos(ctk.CTkFrame):
         self._build()
 
     def _build(self):
-        make_titlebar(self, "GestiÃ³n de Productos", "Agrega, edita o elimina productos", "ðŸ“¦")
+        make_titlebar(self, "Gestion de Productos", "Agrega, edita o elimina productos")
 
         body = ctk.CTkFrame(self, fg_color="transparent")
         body.pack(fill="both", expand=True, padx=14, pady=10)
@@ -36,7 +36,7 @@ class GestionProductos(ctk.CTkFrame):
 
         self.inp_buscar = ctk.CTkEntry(
             tb, height=36, corner_radius=8,
-            placeholder_text="ðŸ”  Buscar producto por nombre o cÃ³digo...",
+            placeholder_text="  Buscar producto por nombre o codigo...",
             border_color=C["borde"], fg_color=C["fondo3"],
             text_color=C["blanco"], placeholder_text_color=C["texto3"],
             font=("Arial", 12)
@@ -48,7 +48,7 @@ class GestionProductos(ctk.CTkFrame):
         hdr = ctk.CTkFrame(izq, fg_color=C["fondo"], corner_radius=6, height=34)
         hdr.pack(fill="x", padx=12, pady=(0, 4))
         hdr.pack_propagate(False)
-        for txt, w in [("CÃ³digo", 140), ("Nombre", 220), ("Precio", 80), ("Stock", 70), ("CategorÃ­a", 110)]:
+        for txt, w in [("Codigo", 140), ("Nombre", 220), ("Precio", 80), ("Stock", 70), ("Categoria", 110)]:
             ctk.CTkLabel(hdr, text=txt, font=("Arial", 10, "bold"),
                          text_color=C["texto3"], width=w).pack(side="left", padx=4, pady=8)
 
@@ -65,7 +65,7 @@ class GestionProductos(ctk.CTkFrame):
         tab_bar.pack_propagate(False)
 
         self.btn_tab_agregar = ctk.CTkButton(
-            tab_bar, text="âž•  Agregar",
+            tab_bar, text="  Agregar",
             command=lambda: self._tab("agregar"),
             fg_color=C["primario"], text_color=C["blanco"],
             font=("Arial", 12, "bold"), height=36, corner_radius=8, width=145
@@ -73,7 +73,7 @@ class GestionProductos(ctk.CTkFrame):
         self.btn_tab_agregar.pack(side="left", padx=4, pady=4)
 
         self.btn_tab_editar = ctk.CTkButton(
-            tab_bar, text="âœï¸  Editar",
+            tab_bar, text="✏️  Editar",
             command=lambda: self._tab("editar"),
             fg_color="transparent", text_color=C["texto3"],
             font=("Arial", 12), height=36, corner_radius=8, width=130,
@@ -89,7 +89,7 @@ class GestionProductos(ctk.CTkFrame):
         self.action_frame = ctk.CTkFrame(der, fg_color="transparent")
         self.action_frame.pack(fill="x", padx=14, pady=(0, 6))
 
-        make_btn_outline(der, "â†  MenÃº principal", lambda: self.ir("menu"), 210, 36).pack(padx=14, pady=(0, 14))
+        make_btn_outline(der, "Menu principal", lambda: self.ir("menu"), 210, 36).pack(padx=14, pady=(0, 14))
         self._tab("agregar")
 
     def _cargar_lista(self):
@@ -124,7 +124,7 @@ class GestionProductos(ctk.CTkFrame):
             for txt, w in [
                 (p["codigo_barras"][:14], 140), (p["nombre"][:28], 220),
                 (f"${float(p['precio']):.2f}", 80), (str(p["stock"]), 70),
-                ((p["cat"] or "â€”")[:14], 110)
+                ((p["cat"] or "—")[:14], 110)
             ]:
                 color = s_col if txt == str(p["stock"]) else C["texto"]
                 ctk.CTkLabel(row, text=txt, font=("Arial", 11), text_color=color,
@@ -173,27 +173,28 @@ class GestionProductos(ctk.CTkFrame):
         ctk.CTkLabel(self.form_scroll, text="Nuevo Producto",
                      font=("Arial", 14, "bold"), text_color=C["primario_t"]).pack(anchor="w", padx=16, pady=(10, 4))
 
-        self.e_codigo    = make_campo(self.form_scroll, "CÃ³digo de barras *", "Escanea o escribe")
+        self.e_codigo    = make_campo(self.form_scroll, "Codigo de barras *", "Escanea o escribe")
         self.e_nombre    = make_campo(self.form_scroll, "Nombre *", "Ej: Leche entera 1L")
         self.e_precio    = make_campo(self.form_scroll, "Precio ($) *", "Ej: 22.50")
         self.e_stock     = make_campo(self.form_scroll, "Stock inicial *", "Ej: 24")
-        self.e_stk_min   = make_campo(self.form_scroll, "Stock mÃ­nimo", "Ej: 10")
+        self.e_stk_min   = make_campo(self.form_scroll, "Stock mínimo", "Ej: 10")
         self.e_caducidad = make_campo(self.form_scroll, "Caducidad (YYYY-MM-DD)", "Ej: 2026-12-31")
 
         _, self.cat_map, cat_nombres = self._get_cats()
-        ctk.CTkLabel(self.form_scroll, text="CategorÃ­a *",
+        ctk.CTkLabel(self.form_scroll, text="Categoria *",
                      font=("Arial", 11, "bold"), text_color=C["texto2"]).pack(anchor="w", padx=16)
         self.combo_cat = ctk.CTkComboBox(
             self.form_scroll, values=cat_nombres, height=38,
             font=("Arial", 12), border_color=C["borde"],
-            fg_color=C["fondo3"], text_color=C["blanco"],
-            button_color=C["borde"], dropdown_fg_color=C["card"]
+            fg_color=C["fondo3"], text_color="#000000",
+            button_color=C["borde"], dropdown_fg_color=C["card"],
+            dropdown_text_color="#000000"
         )
         self.combo_cat.pack(fill="x", padx=16, pady=(3, 10))
         if cat_nombres:
             self.combo_cat.set(cat_nombres[0])
 
-        make_btn(self.action_frame, "âž•  Agregar producto", self._agregar, C["primario"], 210, 40).pack(side="left", padx=(0, 6))
+        make_btn(self.action_frame, "  Agregar producto", self._agregar, C["primario"], 210, 40).pack(side="left", padx=(0, 6))
         make_btn_outline(self.action_frame, "Limpiar", self._limpiar_form, 100, 40).pack(side="left")
 
     def _form_editar(self, prod):
@@ -207,21 +208,22 @@ class GestionProductos(ctk.CTkFrame):
         ctk.CTkLabel(self.form_scroll, text=prod["nombre"],
                      font=("Arial", 11), text_color=C["texto3"]).pack(anchor="w", padx=16, pady=(0, 8))
 
-        self.e_codigo    = make_campo(self.form_scroll, "CÃ³digo de barras *")
+        self.e_codigo    = make_campo(self.form_scroll, "Codigo de barras *")
         self.e_nombre    = make_campo(self.form_scroll, "Nombre *")
         self.e_precio    = make_campo(self.form_scroll, "Precio ($) *")
         self.e_stock     = make_campo(self.form_scroll, "Stock *")
-        self.e_stk_min   = make_campo(self.form_scroll, "Stock mÃ­nimo")
+        self.e_stk_min   = make_campo(self.form_scroll, "Stock minimo")
         self.e_caducidad = make_campo(self.form_scroll, "Caducidad (YYYY-MM-DD)")
 
         _, self.cat_map, cat_nombres = self._get_cats()
-        ctk.CTkLabel(self.form_scroll, text="CategorÃ­a *",
+        ctk.CTkLabel(self.form_scroll, text="Categoria",
                      font=("Arial", 11, "bold"), text_color=C["texto2"]).pack(anchor="w", padx=16)
         self.combo_cat = ctk.CTkComboBox(
             self.form_scroll, values=cat_nombres, height=38,
             font=("Arial", 12), border_color=C["borde"],
-            fg_color=C["fondo3"], text_color=C["blanco"],
-            button_color=C["borde"], dropdown_fg_color=C["card"]
+            fg_color=C["fondo3"], text_color="#000000",
+            button_color=C["borde"], dropdown_fg_color=C["card"],
+            dropdown_text_color="#000000"
         )
         self.combo_cat.pack(fill="x", padx=16, pady=(3, 10))
 
@@ -236,8 +238,8 @@ class GestionProductos(ctk.CTkFrame):
         if cat_actual and cat_actual["nombre"] in cat_nombres:
             self.combo_cat.set(cat_actual["nombre"])
 
-        make_btn(self.action_frame, "ðŸ’¾  Guardar", self._guardar_edicion, C["morado"], 150, 40).pack(side="left", padx=(0, 6))
-        make_btn_rojo(self.action_frame, "ðŸ—‘  Eliminar", self._eliminar, 120, 40).pack(side="left")
+        make_btn(self.action_frame, "  Guardar", self._guardar_edicion, C["morado"], 150, 40).pack(side="left", padx=(0, 6))
+        make_btn_rojo(self.action_frame, "  Eliminar", self._eliminar, 120, 40).pack(side="left")
 
     def _validar(self):
         codigo  = self.e_codigo.get().strip()
@@ -247,18 +249,18 @@ class GestionProductos(ctk.CTkFrame):
         stk_min = self.e_stk_min.get().strip()
 
         if not codigo:
-            messagebox.showwarning("Requerido", "El cÃ³digo de barras es obligatorio"); return None
+            messagebox.showwarning("Requerido", "El codigo de barras es obligatorio"); return None
         if not nombre:
             messagebox.showwarning("Requerido", "El nombre es obligatorio"); return None
         try:
             precio_f = float(precio)
             if precio_f <= 0: raise ValueError
         except ValueError:
-            messagebox.showwarning("InvÃ¡lido", "Ingresa un precio vÃ¡lido mayor a 0"); return None
+            messagebox.showwarning("Invalido", "Ingresa un precio valido mayor a 0"); return None
         try:
             stock_i = int(stock)
         except ValueError:
-            messagebox.showwarning("InvÃ¡lido", "El stock debe ser un nÃºmero entero"); return None
+            messagebox.showwarning("Invalido", "El stock debe ser un numero entero"); return None
 
         stk_min_i = int(stk_min) if stk_min.isdigit() else 5
         cat_id    = self.cat_map.get(self.combo_cat.get())
@@ -271,13 +273,13 @@ class GestionProductos(ctk.CTkFrame):
         if not d: return
         existe = ejecutar("SELECT id FROM productos WHERE codigo_barras = %s", (d["codigo"],), fetchone=True)
         if existe:
-            messagebox.showerror("Duplicado", f"El cÃ³digo '{d['codigo']}' ya existe."); return
+            messagebox.showerror("Duplicado", f"El codigo '{d['codigo']}' ya existe."); return
         pid = ejecutar(
             "INSERT INTO productos (codigo_barras, nombre, precio, stock, stock_minimo, categoria_id, fecha_caducidad) VALUES (%s,%s,%s,%s,%s,%s,%s)",
             (d["codigo"], d["nombre"], d["precio"], d["stock"], d["stk_min"], d["cat_id"], d["caducidad"])
         )
         if pid:
-            messagebox.showinfo("âœ“ Agregado", f"'{d['nombre']}' guardado â€” ID: #{pid}")
+            messagebox.showinfo("Agregado", f"'{d['nombre']}' guardado. ID: #{pid}")
             self._limpiar_form()
             self._cargar_lista()
 
@@ -288,16 +290,16 @@ class GestionProductos(ctk.CTkFrame):
             "UPDATE productos SET codigo_barras=%s,nombre=%s,precio=%s,stock=%s,stock_minimo=%s,categoria_id=%s,fecha_caducidad=%s WHERE id=%s",
             (d["codigo"], d["nombre"], d["precio"], d["stock"], d["stk_min"], d["cat_id"], d["caducidad"], self.producto_sel_id)
         )
-        messagebox.showinfo("âœ“ Guardado", f"'{d['nombre']}' actualizado correctamente")
+        messagebox.showinfo("Guardado", f"'{d['nombre']}' actualizado correctamente")
         self._cargar_lista()
 
     def _eliminar(self):
         if not self.producto_sel_id: return
         p = ejecutar("SELECT nombre FROM productos WHERE id = %s", (self.producto_sel_id,), fetchone=True)
         nombre = p["nombre"] if p else "este producto"
-        if messagebox.askyesno("Eliminar", f"Â¿Eliminar '{nombre}'?\nEsta acciÃ³n no se puede deshacer."):
+        if messagebox.askyesno("Eliminar", f"Eliminar '{nombre}'?\nEsta accion no se puede deshacer."):
             ejecutar("DELETE FROM productos WHERE id = %s", (self.producto_sel_id,))
-            messagebox.showinfo("âœ“ Eliminado", f"'{nombre}' eliminado")
+            messagebox.showinfo("Eliminado", f"'{nombre}' eliminado")
             self.producto_sel_id = None
             self._tab("agregar")
             self._cargar_lista()
@@ -309,4 +311,3 @@ class GestionProductos(ctk.CTkFrame):
     def _limpiar_busqueda(self):
         self.inp_buscar.delete(0, "end")
         self._cargar_lista()
-
